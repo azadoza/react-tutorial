@@ -2,17 +2,44 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 class Square extends React.Component {
-  render() {
-    return (
-      <button className="square" onClick={() => console.log('click')}>       {this.props.value}
-      </button>
-    );
-  }
- }
+  /* all react component class w a constructor start w super(props) */
+    render() {
+        return(
+        /* squares are controlled components.
+        they informs board when clicked.
+        Board sends value to square */
+        <button className="square"
+                onClick={() =>
+                  this.props.onClick()
+                    }>
+                      {this.props.value}
+            </button>
+        );
+    }
+}
+/* Storing the game's state in the parent, Board
+Board passes a prop telling each square what to display */
 
 class Board extends React.Component {
+  // declare shared state of children in parent
+  constructor(props){
+    super(props);
+    this.state = {
+      squares : Array(9).fill(null),
+    };
+  }
+  handleClick(i) {
+    /* .slice creates a copy of squares array for immutability */
+    const squares = this.state.squares.slice();
+    squares[i] = 'x'
+    this.setState({squares: squares});
+  }
     renderSquare(i) {
-        return <Square value={i}/>; // passing a prop called value
+        return(
+           <Square value={this.state.squares[i]}
+           onClick={() => this.handleClick(i)}
+           />
+        ); // reading squares array from the Board constructor
     }
 
     render() {
