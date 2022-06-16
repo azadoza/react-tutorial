@@ -1,21 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-class Square extends React.Component {
+function Square(props) {
   /* all react component class w a constructor start w super(props) */
-    render() {
-        return(
+       
+  return(
         /* squares are controlled components.
         they informs board when clicked.
         Board sends value to square */
         <button className="square"
-                onClick={() =>
-                  this.props.onClick()
-                    }>
-                      {this.props.value}
+                onClick={props.onClick}>
+                  {props.value}
             </button>
         );
-    }
 }
 /* Storing the game's state in the parent, Board
 Board passes a prop telling each square what to display */
